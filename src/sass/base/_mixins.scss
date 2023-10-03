@@ -1,0 +1,7 @@
+@mixin font($m, $p, $size, $w, $color) {
+  padding: $p;
+  margin: $m;
+  font-size: $size;
+  font-weight: $w;
+  color: $color;
+}

@@ -1,0 +1,30 @@
+@import '../../sass/base/variables';
+@import '../../sass/base/mixins';
+
+.content {
+  display: flex;
+  flex-flow: column;
+  /* width: 60%; */
+  min-height: 100dvh;
+  justify-content: center;
+  background: url('../../assets/movie.webp');
+  background-size: cover;
+  background-repeat: no-repeat;
+  padding: 2.5rem;
+
+  &--title {
+    @include font(0, 1rem 0, 1.5rem, 600, $text-white-200);
+  }
+
+  &--subtitle {
+    @include font(0, 0, 1.125rem, 500, $text-white-200);
+  }
+
+  &--text {
+    @include font(0, 0, 1rem, 300, $text-white-200);
+  }
+
+  &>article {
+    padding: 1rem 0;
+  }
+}

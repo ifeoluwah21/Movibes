@@ -1,0 +1,22 @@
+@import '../../sass/base/variables';
+@import '../../sass/base/mixins';
+
+.section {
+  min-height: 100dvh;
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  background: $bg-color-black-600;
+
+  &--title {
+    width: 80%;
+    text-align: center;
+    @include font(0 auto, 0, 2rem, 400, $text-white-200 )
+  }
+
+  &--text {
+    width: 80%;
+    text-align: center;
+    @include font(0 auto, 0, 0.875rem, 500, $text-gray-500)
+  }
+}
