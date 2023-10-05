@@ -4,28 +4,28 @@ import {
 	createBrowserRouter,
 	createRoutesFromElements,
 } from 'react-router-dom';
-import Home from './pages/Home';
 import Movies from './pages/Movies';
 import MovieDetail from './pages/MovieDetail';
 import AuthPage from './pages/AuthPage';
+import HomeLayout from './pages/HomeLayout';
 
 const router = createBrowserRouter(
 	createRoutesFromElements(
 		<Route path="/">
 			<Route
-				path="/home"
-				element={<Home />}
-			/>
+				path="/"
+				element={<HomeLayout />}>
+				<Route
+					path="movies"
+					element={<Movies />}
+				/>
+				<Route
+					path="home"
+					element={<MovieDetail />}
+				/>
+			</Route>
 			<Route
-				path="/movies"
-				element={<Movies />}
-			/>
-			<Route
-				path="/movies/:movieId"
-				element={<MovieDetail />}
-			/>
-			<Route
-				path="/login"
+				path="login"
 				element={<AuthPage />}
 			/>
 		</Route>

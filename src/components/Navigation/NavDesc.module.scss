@@ -1,0 +1,32 @@
+@import "../../sass/base/variables";
+@import "../../sass/base/mixins";
+
+.card {
+  width: 10.625rem;
+  margin: 1rem auto;
+  border-radius: 1.25rem;
+  background: $bg-color-black-600;
+  padding: 1rem;
+  box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.25);
+
+  &--title {
+    line-height: normal;
+    @include font(0, 0, 0.9375rem, 600, rgba(232, 232, 232, 0.80))
+  }
+
+  &--content {
+    line-height: normal;
+    @include font(0.75rem 0, 0, 0.75rem, 400, $text-gray-500)
+  }
+
+  &--btn {
+    border-radius: 1.875rem;
+    background: rgba(61, 210, 204, 0.40);
+    box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.25);
+    border: none;
+    text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
+    display: block;
+    line-height: normal;
+    @include font(0 auto, 0.5rem 0.95rem, 0.75rem, 500, $pry-color-500)
+  }
+}
