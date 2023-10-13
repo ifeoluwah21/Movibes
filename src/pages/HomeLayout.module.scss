@@ -1,53 +1,7 @@
 @import '../sass/base/variables';
 @import '../sass/base/mixins';
 
-.nav {
-  min-height: 100dvh;
-  width: 14.125rem;
-  padding: 3rem 0;
-  background: $bg-color-black-400;
-
-  &--list {
-    padding: 0;
-  }
-
-  &--item {
-    list-style: none;
-  }
-
-  &--link {
-    text-decoration: none;
-    text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
-    display: block;
-    @include font(0, 1.25rem 3rem, 1.125rem, 600, $text-gray-500);
-    background-color: $bg-color-black-400;
-    transition: all 100ms ease-in;
-
-    &__active {
-      background: $pry-color-100;
-      color: $pry-color-500;
-      position: relative;
-
-      &:before {
-        content: '';
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        right: 0;
-        height: 100%;
-        width: 6px;
-        filter: drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.25));
-        background-color: $pry-color-500;
-      }
-    }
-  }
-}
-
-.logo {
-  width: 7.375rem;
-  margin: 1rem auto;
-
-  &>img {
-    width: 100%;
-  }
+.layout {
+  display: flex;
+  background: $bg-color-black-600 ;
 }

@@ -1,0 +1,35 @@
+@import '../../sass/base/mixins';
+@import '../../sass/base/variables';
+
+.form {
+  &--label {
+    display: flex;
+    position: relative;
+    top: 3rem;
+    height: 4.0625rem;
+    width: 40rem;
+    justify-content: flex-start;
+    align-items: center;
+    margin-left: 2rem;
+  }
+
+  &--search-icon {
+    z-index: 3;
+    position: absolute;
+    fill: $text-gray-500;
+    margin-left: 2rem;
+  }
+
+  &--input {
+    position: absolute;
+    color: $text-gray-500;
+    font-weight: 500;
+    width: 100%;
+    border-radius: 1.875rem;
+    background: $bg-color-black-400;
+    padding: 0.5rem 4.5rem;
+    box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.20);
+    border: none;
+  }
+
+}
