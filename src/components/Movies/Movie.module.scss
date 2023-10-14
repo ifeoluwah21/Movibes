@@ -1,0 +1,26 @@
+@import '../../sass/base/mixins';
+@import '../../sass/base/variables';
+
+.container {
+  position: relative;
+  flex-basis: 12.5rem;
+  flex-shrink: 0;
+  flex-grow: 0;
+
+  &--img {}
+
+}
+
+.rating {
+  width: 4.25rem;
+  height: 1.75rem;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  position: absolute;
+  top: 0;
+  right: 4px;
+  border-radius: 0rem 1.25rem;
+  background: rgba(232, 232, 232, 0.15);
+  backdrop-filter: blur(2.5px);
+}

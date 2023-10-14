@@ -8,6 +8,8 @@ const Hero = () => {
 				className={styles['container--img']}
 				src={img}
 				alt={'Movies'}
+				width={640}
+				height={215}
 			/>
 			<button
 				className={`${styles['container--btn']} ${styles['container--btn__main']}`}

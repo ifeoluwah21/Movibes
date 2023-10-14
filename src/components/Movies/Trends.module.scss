@@ -1,0 +1,27 @@
+@import '../../sass/base/mixins';
+@import '../../sass/base/variables';
+
+.container {
+  margin-top: 1.5rem;
+  padding: 2rem 0;
+
+  &--title {
+    display: flex;
+    justify-content: space-between;
+
+    &>h3 {
+      @include font(0, 0, 1.5625rem, 600, $text-white-200);
+    }
+
+    &>span {
+      @include font(0, 0, 0.9375rem, 600, $text-gray-500);
+    }
+  }
+}
+
+.movie-con {
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 16px;
+  overflow-x: scroll;
+}
