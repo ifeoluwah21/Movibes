@@ -2,15 +2,17 @@
 @import '../../sass/base/variables';
 
 .form {
+
+  margin-top: 3rem;
+  margin-left: 2rem;
+
   &--label {
     display: flex;
     position: relative;
-    top: 3rem;
     height: 4.0625rem;
     width: 40rem;
     justify-content: flex-start;
     align-items: center;
-    margin-left: 2rem;
   }
 
   &--search-icon {
