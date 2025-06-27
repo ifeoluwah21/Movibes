@@ -7,7 +7,7 @@ import NavLink from "../NavLink";
 
 const SideNav: React.FC = () => {
   return (
-    <nav className="bg-black-100 flex flex-col flex-nowrap gap-y-20 rounded-br-[45px] rounded-tr-[45px] py-8">
+    <nav className="bg-black-100 row-span-2 flex flex-col flex-nowrap gap-y-20 rounded-br-[45px] rounded-tr-[45px] py-8">
       <figure className="px-8">
         <img src={logo} width={118} height={42} alt="Movibes Logo" />
       </figure>
