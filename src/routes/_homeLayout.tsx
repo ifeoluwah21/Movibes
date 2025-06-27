@@ -8,7 +8,7 @@ export const Route = createFileRoute("/_homeLayout")({
 
 function RouteComponent() {
   return (
-    <main className="grid h-screen grid-cols-[226px_auto] grid-rows-[100px_1fr] text-white">
+    <main className="grid h-screen grid-cols-[226px_auto] grid-rows-[100px_1fr] overflow-y-clip text-white">
       <SideNav />
       <header className="grid grid-cols-[1fr_100px] justify-between gap-12 p-8">
         <Form className="w-full">

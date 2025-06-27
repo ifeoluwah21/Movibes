@@ -4,8 +4,17 @@
 @theme {
   --font-Roboto: "Roboto", sans-serif;
   --color-white-50: #fefefe;
+  --color-white-100: #e8e8e8;
   --color-gray-50: #bababa;
   --color-black-50: #191919;
   --color-black-100: #212121;
   --color-sky-50: #3dd2cc;
+}
+
+.scroll {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+.scroll::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
 }
