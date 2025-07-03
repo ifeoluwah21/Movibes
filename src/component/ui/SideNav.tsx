@@ -4,8 +4,11 @@ import { BiHome, BiVideo } from "react-icons/bi";
 import { PiCalendarDotDuotone, PiMonitorPlayBold } from "react-icons/pi";
 import { RiLogoutBoxRLine } from "react-icons/ri";
 import NavLink from "../NavLink";
+import { logOut } from "../../firebase";
+import { useNavigate } from "@tanstack/react-router";
 
 const SideNav: React.FC = () => {
+  const navigate = useNavigate({ from: "/" });
   return (
     <nav className="bg-black-100 row-span-2 flex flex-col flex-nowrap gap-y-20 rounded-br-[45px] rounded-tr-[45px] py-8">
       <figure className="px-8">
@@ -32,11 +35,19 @@ const SideNav: React.FC = () => {
             <PiCalendarDotDuotone /> Upcoming
           </li>
         </NavLink>
-        <NavLink to="/" className="mt-auto">
+        <button
+          className="relative mt-auto px-6 py-4 text-base text-gray-50 transition-all duration-200 after:absolute after:right-0 after:top-0 after:inline-block after:h-full after:w-0 after:bg-sky-50 after:content-[''] hover:bg-sky-50/40 hover:text-sky-50/100 hover:after:w-1"
+          onClick={async () => {
+            await logOut();
+            navigate({
+              to: "/signin",
+            });
+          }}
+        >
           <li className="flex items-center gap-x-2">
             <RiLogoutBoxRLine /> Log out
           </li>
-        </NavLink>
+        </button>
       </ul>
     </nav>
   );

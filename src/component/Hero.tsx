@@ -15,13 +15,13 @@ const Hero: React.FC = () => {
         <div className="absolute bottom-6 right-6 flex items-center gap-4">
           <button
             type="button"
-            className="bg-white-100/10 flex items-center gap-2 rounded-[15px] px-6 py-2.5"
+            className="bg-white-100/10 flex cursor-pointer items-center gap-2 rounded-[15px] px-6 py-2.5"
           >
             <BsPlayFill size={24} /> Play
           </button>
           <button
             type="button"
-            className="bg-white-100/10 flex items-center gap-2 rounded-[15px] px-4 py-2.5"
+            className="bg-white-100/10 flex cursor-pointer items-center gap-2 rounded-[15px] px-4 py-2.5"
           >
             <BsFillInfoCircleFill /> More info
           </button>

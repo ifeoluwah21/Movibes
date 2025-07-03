@@ -1,13 +1,15 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { Form, FormGroup, FormInput, FormLabel } from "../../component/ui/Form";
 import Button from "../../component/ui/Button";
 import { FcGoogle } from "react-icons/fc";
+import { signInWithGoogle } from "../../firebase";
 
 export const Route = createFileRoute("/_authLayout/signin")({
   component: RouteComponent,
 });
 
 function RouteComponent() {
+  const navigate = useNavigate({ from: "/signin" });
   return (
     <section className="grid h-screen grid-cols-[1.2fr_1fr]">
       <div>
@@ -43,6 +45,7 @@ function RouteComponent() {
               name="password"
               id="password"
               placeholder="Password"
+              autoComplete="true"
             />
           </FormGroup>
           <FormGroup>
@@ -55,6 +58,11 @@ function RouteComponent() {
             <Button
               type="button"
               className="bg-black-50 text-white-50 border-1 drop-shadow-gray-50 gap-4 border-gray-50"
+              onClick={async () => {
+                await signInWithGoogle();
+                console.log("Logged In");
+                navigate({ to: "/" });
+              }}
             >
               <FcGoogle size={"30px"} /> Log in with Google
             </Button>
