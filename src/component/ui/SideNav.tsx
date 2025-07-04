@@ -38,7 +38,7 @@ const SideNav: React.FC = () => {
         <button
           className="relative mt-auto px-6 py-4 text-base text-gray-50 transition-all duration-200 after:absolute after:right-0 after:top-0 after:inline-block after:h-full after:w-0 after:bg-sky-50 after:content-[''] hover:bg-sky-50/40 hover:text-sky-50/100 hover:after:w-1"
           onClick={async () => {
-            await logOut();
+            logOut();
             navigate({
               to: "/signin",
             });

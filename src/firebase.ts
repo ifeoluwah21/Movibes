@@ -28,7 +28,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 // const analytics = getAnalytics(app);
 
-const auth = getAuth(app);
+export const auth = getAuth(app);
 
 export async function signUpWithEmailPassword(email: string, password: string) {
   try {
@@ -38,9 +38,10 @@ export async function signUpWithEmailPassword(email: string, password: string) {
       password,
     );
     const user = userCredentials.user;
-    console.log(user);
+    return user;
   } catch (err) {
-    console.log(err);
+    const error = err as Error;
+    return error;
   }
 }
 export async function signInWithEmailPassword(email: string, password: string) {
@@ -51,9 +52,10 @@ export async function signInWithEmailPassword(email: string, password: string) {
       password,
     );
     const user = userCredentials.user;
-    console.log(user);
+    return user;
   } catch (err) {
-    console.log(err);
+    const error = err as Error;
+    return error;
   }
 }
 

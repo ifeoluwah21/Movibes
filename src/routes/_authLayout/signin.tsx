@@ -1,11 +1,26 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import { Form, FormGroup, FormInput, FormLabel } from "../../component/ui/Form";
+import { Form, FormGroup, FormInput } from "../../component/ui/Form";
 import Button from "../../component/ui/Button";
 import { FcGoogle } from "react-icons/fc";
-import { signInWithGoogle } from "../../firebase";
-
+import { signInWithEmailPassword, signInWithGoogle } from "../../firebase";
+import { Formik } from "formik";
+import * as Yup from "yup";
 export const Route = createFileRoute("/_authLayout/signin")({
   component: RouteComponent,
+});
+
+const signInSchema = Yup.object({
+  email: Yup.string().email("Invalid email address").required("Required"),
+  password: Yup.string()
+    .required("Required")
+    .min(8, "Password must be at least 8 characters")
+    .matches(/[a-z]/, "Password must contain at least one lowercase letter")
+    .matches(/[A-Z]/, "Password must contain at least one uppercase letter")
+    .matches(/[0-9]/, "Password must contain at least one number")
+    .matches(
+      /[@$!%*?&#]/,
+      "Password must contain at least one special character",
+    ),
 });
 
 function RouteComponent() {
@@ -20,61 +35,85 @@ function RouteComponent() {
         />
       </div>
       <div className="bg-black-50 h-full">
-        <Form className="mx-auto my-14 flex h-full w-4/5 max-w-[415px] flex-col justify-center">
-          <FormGroup>
-            <h1 className="text-white-50 text-center text-4xl font-semibold">
-              Welcome back
-            </h1>
-            <p className="text-xl text-gray-50">
-              Welcome back! Please enter your details.
-            </p>
-          </FormGroup>
-          <FormGroup>
-            <FormLabel htmlFor="email">Email</FormLabel>
-            <FormInput
-              type="email"
-              name="email"
-              id="email"
-              placeholder="Email"
-            />
-          </FormGroup>
-          <FormGroup>
-            <FormLabel htmlFor="password">Password</FormLabel>
-            <FormInput
-              type="password"
-              name="password"
-              id="password"
-              placeholder="Password"
-              autoComplete="true"
-            />
-          </FormGroup>
-          <FormGroup>
-            <Button
-              type="submit"
-              className="bg-white-50 text-black-50 font-semibold"
-            >
-              Log in
-            </Button>
-            <Button
-              type="button"
-              className="bg-black-50 text-white-50 border-1 drop-shadow-gray-50 gap-4 border-gray-50"
-              onClick={async () => {
-                await signInWithGoogle();
-                console.log("Logged In");
-                navigate({ to: "/" });
-              }}
-            >
-              <FcGoogle size={"30px"} /> Log in with Google
-            </Button>
-          </FormGroup>
+        <Formik
+          initialValues={{ email: "", password: "" }}
+          validationSchema={signInSchema}
+          onSubmit={async (val, fn) => {
+            console.log("Logging In", val);
+            const result = await signInWithEmailPassword(
+              val.email,
+              val.password,
+            );
+            if (result instanceof Error) {
+              console.log(result.message);
+              fn.setErrors({ email: "Invalid email or password" });
+              return;
+            }
+            console.log(result);
+            navigate({ to: "/" });
+          }}
+        >
+          {({ isSubmitting }) => {
+            return (
+              <Form className="mx-auto my-14 flex h-full w-4/5 max-w-[415px] flex-col justify-center">
+                <FormGroup>
+                  <h1 className="text-white-50 text-center text-4xl font-semibold">
+                    Welcome back
+                  </h1>
+                  <p className="text-xl text-gray-50">
+                    Welcome back! Please enter your details.
+                  </p>
+                </FormGroup>
+                <FormGroup>
+                  <FormInput
+                    label="Email"
+                    type="email"
+                    name="email"
+                    id="email"
+                    placeholder="Email"
+                  />
+                </FormGroup>
+                <FormGroup>
+                  <FormInput
+                    label="Password"
+                    type="password"
+                    name="password"
+                    id="password"
+                    placeholder="Password"
+                    autoComplete="true"
+                  />
+                </FormGroup>
+                <FormGroup>
+                  <Button
+                    disabled={isSubmitting}
+                    type="submit"
+                    className="bg-white-50 disabled:bg-white-50/75 text-black-50 font-semibold transition-colors duration-300"
+                  >
+                    Log in
+                  </Button>
+                  <Button
+                    type="button"
+                    className="bg-black-50 text-white-50 border-1 drop-shadow-gray-50 gap-4 border-gray-50"
+                    onClick={async () => {
+                      await signInWithGoogle();
+                      console.log("Logged In");
+                      navigate({ to: "/" });
+                    }}
+                  >
+                    <FcGoogle size={"30px"} /> Log in with Google
+                  </Button>
+                </FormGroup>
 
-          <p className="text-center text-sm text-gray-50">
-            Don't have an account?{" "}
-            <Link to="/signup" className="text-white-50">
-              Sign up for free
-            </Link>
-          </p>
-        </Form>
+                <p className="text-center text-sm text-gray-50">
+                  Don't have an account?{" "}
+                  <Link to="/signup" className="text-white-50">
+                    Sign up for free
+                  </Link>
+                </p>
+              </Form>
+            );
+          }}
+        </Formik>
       </div>
     </section>
   );
