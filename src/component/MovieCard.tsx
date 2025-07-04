@@ -1,11 +1,15 @@
-import React from "react";
 import { FaStar } from "react-icons/fa";
+import type { Trending } from "../api-utils";
 
-export const MovieCard: React.FC = () => {
+export const MovieCard: React.FC<{
+  poster_path: string;
+  name: string;
+  vote_average: number;
+}> = ({ name, vote_average, poster_path }) => {
   return (
     <article className="relative w-[185px]">
       <img
-        src="https://image.tmdb.org/t/p/w185/vqBmyAj0Xm9LnS1xe1MSlMAJyHq.jpg"
+        src={`https://image.tmdb.org/t/p/w185${poster_path}`}
         width={185}
         height={278}
         className="rounded-[20px]"
@@ -13,20 +17,19 @@ export const MovieCard: React.FC = () => {
       />
       <div className="bg-black-100/25 absolute right-0 top-0 flex items-center gap-x-1 rounded-bl-[20px] px-2.5 py-1.5">
         <FaStar className="fill-amber-400" />
-        <span>8.8</span>
+        <span>{vote_average.toFixed(1)}</span>
       </div>
-      <p className="sr-only">The movies</p>
+      <p className="sr-only">{name}</p>
     </article>
   );
 };
 
-export const MovieContainer: React.FC = () => {
-  const arr = new Array(20).fill(2);
+export const MovieContainer: React.FC<{ items: Trending[] }> = ({ items }) => {
   return (
-    <section className="flex flex-row flex-wrap justify-between gap-x-6 gap-y-12 p-8">
-      {arr.map((value, i) => {
-        return <MovieCard key={i} />;
+    <div className="flex flex-row flex-wrap justify-between gap-x-6 gap-y-12">
+      {items.map((item) => {
+        return <MovieCard key={item.id} {...item} />;
       })}
-    </section>
+    </div>
   );
 };

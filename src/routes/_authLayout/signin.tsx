@@ -1,10 +1,16 @@
-import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import {
+  createFileRoute,
+  Link,
+  Navigate,
+  useNavigate,
+} from "@tanstack/react-router";
 import { Form, FormGroup, FormInput } from "../../component/ui/Form";
 import Button from "../../component/ui/Button";
 import { FcGoogle } from "react-icons/fc";
 import { signInWithEmailPassword, signInWithGoogle } from "../../firebase";
 import { Formik } from "formik";
 import * as Yup from "yup";
+import { useAuth } from "../../component/auth/useAuth";
 export const Route = createFileRoute("/_authLayout/signin")({
   component: RouteComponent,
 });
@@ -25,6 +31,10 @@ const signInSchema = Yup.object({
 
 function RouteComponent() {
   const navigate = useNavigate({ from: "/signin" });
+  const user = useAuth();
+  if (user) {
+    return <Navigate to="/" />;
+  }
   return (
     <section className="grid h-screen grid-cols-[1.2fr_1fr]">
       <div>

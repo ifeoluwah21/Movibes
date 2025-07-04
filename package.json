@@ -13,6 +13,7 @@
     "@tailwindcss/vite": "^4.1.11",
     "@tanstack/react-router": "^1.121.34",
     "@tanstack/react-router-devtools": "^1.121.34",
+    "axios": "^1.10.0",
     "clsx": "^2.1.1",
     "firebase": "^11.10.0",
     "formik": "^2.4.6",
