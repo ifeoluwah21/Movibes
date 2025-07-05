@@ -1,18 +1,18 @@
 import { Await, createFileRoute } from "@tanstack/react-router";
 import {
-  MovieCategoryHeader,
-  MovieCategoryLayout,
-  MovieContainer,
-} from "../../component/MovieCard";
-import Hero from "../../component/Hero";
-import {
   getAllTrending,
   getPopular,
   getUpcoming,
   months,
 } from "../../api-utils";
+import {
+  MovieCategoryHeader,
+  MovieCategoryLayout,
+  MovieContainer,
+} from "../../component/MovieCard";
 import Loading from "../../component/ui/Loading";
-export const Route = createFileRoute("/_homeLayout/")({
+
+export const Route = createFileRoute("/_homeLayout/movies")({
   component: RouteComponent,
   loader: () => {
     const movieData = Promise.all([
@@ -31,9 +31,7 @@ function RouteComponent() {
   const monthNum = new Date().getMonth();
   return (
     <div className="scroll overflow-y-scroll text-white">
-      <Hero />
       <MovieCategoryLayout>
-        <MovieCategoryHeader title="Trending" />
         <Await promise={deferredSlowData} fallback={<Loading />}>
           {(data) => {
             return <MovieContainer items={data[0]} />;

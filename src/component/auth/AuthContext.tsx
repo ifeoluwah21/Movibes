@@ -2,11 +2,11 @@ import { onAuthStateChanged, type User } from "firebase/auth";
 import { useEffect, useState } from "react";
 import { auth } from "../../firebase";
 import { AuthContext } from "./AuthContextValue";
-import { Navigate } from "@tanstack/react-router";
 
 const AuthProvider: React.FC<React.PropsWithChildren> = ({ children }) => {
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
+  console.log(loading);
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       console.log("state changed");

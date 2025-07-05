@@ -14,27 +14,19 @@ const SideNav: React.FC = () => {
       <figure className="px-8">
         <img src={logo} width={118} height={42} alt="Movibes Logo" />
       </figure>
-      <ul className="flex h-full flex-col flex-nowrap space-y-2">
-        <NavLink to="/">
-          <li className="flex items-center gap-x-2">
-            <BiHome /> Home
-          </li>
-        </NavLink>
-        <NavLink to="/">
-          <li className="flex items-center gap-x-2">
-            <BiVideo /> Movies
-          </li>
-        </NavLink>
-        <NavLink to="/">
-          <li className="flex items-center gap-x-2">
-            <PiMonitorPlayBold /> TV series
-          </li>
-        </NavLink>
-        <NavLink to="/">
-          <li className="flex items-center gap-x-2">
-            <PiCalendarDotDuotone /> Upcoming
-          </li>
-        </NavLink>
+      <ul className="flex h-full flex-col flex-nowrap space-y-12">
+        <NavLink to="/" navIcon={<BiHome />} navTitle="Home" />
+        <NavLink to="/movies" navIcon={<BiVideo />} navTitle="Movies" />
+        <NavLink
+          to="/tv-series"
+          navIcon={<PiMonitorPlayBold />}
+          navTitle="TV Series"
+        />
+        <NavLink
+          to="/upcoming"
+          navIcon={<PiCalendarDotDuotone />}
+          navTitle="Upcoming"
+        />
         <button
           className="relative mt-auto px-6 py-4 text-base text-gray-50 transition-all duration-200 after:absolute after:right-0 after:top-0 after:inline-block after:h-full after:w-0 after:bg-sky-50 after:content-[''] hover:bg-sky-50/40 hover:text-sky-50/100 hover:after:w-1"
           onClick={async () => {

@@ -12,6 +12,9 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as HomeLayoutRouteImport } from './routes/_homeLayout'
 import { Route as AuthLayoutRouteImport } from './routes/_authLayout'
 import { Route as HomeLayoutIndexRouteImport } from './routes/_homeLayout/index'
+import { Route as HomeLayoutUpcomingRouteImport } from './routes/_homeLayout/upcoming'
+import { Route as HomeLayoutTvSeriesRouteImport } from './routes/_homeLayout/tv-series'
+import { Route as HomeLayoutMoviesRouteImport } from './routes/_homeLayout/movies'
 import { Route as AuthLayoutSignupRouteImport } from './routes/_authLayout/signup'
 import { Route as AuthLayoutSigninRouteImport } from './routes/_authLayout/signin'
 
@@ -28,6 +31,21 @@ const HomeLayoutIndexRoute = HomeLayoutIndexRouteImport.update({
   path: '/',
   getParentRoute: () => HomeLayoutRoute,
 } as any)
+const HomeLayoutUpcomingRoute = HomeLayoutUpcomingRouteImport.update({
+  id: '/upcoming',
+  path: '/upcoming',
+  getParentRoute: () => HomeLayoutRoute,
+} as any)
+const HomeLayoutTvSeriesRoute = HomeLayoutTvSeriesRouteImport.update({
+  id: '/tv-series',
+  path: '/tv-series',
+  getParentRoute: () => HomeLayoutRoute,
+} as any)
+const HomeLayoutMoviesRoute = HomeLayoutMoviesRouteImport.update({
+  id: '/movies',
+  path: '/movies',
+  getParentRoute: () => HomeLayoutRoute,
+} as any)
 const AuthLayoutSignupRoute = AuthLayoutSignupRouteImport.update({
   id: '/signup',
   path: '/signup',
@@ -42,11 +60,17 @@ const AuthLayoutSigninRoute = AuthLayoutSigninRouteImport.update({
 export interface FileRoutesByFullPath {
   '/signin': typeof AuthLayoutSigninRoute
   '/signup': typeof AuthLayoutSignupRoute
+  '/movies': typeof HomeLayoutMoviesRoute
+  '/tv-series': typeof HomeLayoutTvSeriesRoute
+  '/upcoming': typeof HomeLayoutUpcomingRoute
   '/': typeof HomeLayoutIndexRoute
 }
 export interface FileRoutesByTo {
   '/signin': typeof AuthLayoutSigninRoute
   '/signup': typeof AuthLayoutSignupRoute
+  '/movies': typeof HomeLayoutMoviesRoute
+  '/tv-series': typeof HomeLayoutTvSeriesRoute
+  '/upcoming': typeof HomeLayoutUpcomingRoute
   '/': typeof HomeLayoutIndexRoute
 }
 export interface FileRoutesById {
@@ -55,19 +79,31 @@ export interface FileRoutesById {
   '/_homeLayout': typeof HomeLayoutRouteWithChildren
   '/_authLayout/signin': typeof AuthLayoutSigninRoute
   '/_authLayout/signup': typeof AuthLayoutSignupRoute
+  '/_homeLayout/movies': typeof HomeLayoutMoviesRoute
+  '/_homeLayout/tv-series': typeof HomeLayoutTvSeriesRoute
+  '/_homeLayout/upcoming': typeof HomeLayoutUpcomingRoute
   '/_homeLayout/': typeof HomeLayoutIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/signin' | '/signup' | '/'
+  fullPaths:
+    | '/signin'
+    | '/signup'
+    | '/movies'
+    | '/tv-series'
+    | '/upcoming'
+    | '/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/signin' | '/signup' | '/'
+  to: '/signin' | '/signup' | '/movies' | '/tv-series' | '/upcoming' | '/'
   id:
     | '__root__'
     | '/_authLayout'
     | '/_homeLayout'
     | '/_authLayout/signin'
     | '/_authLayout/signup'
+    | '/_homeLayout/movies'
+    | '/_homeLayout/tv-series'
+    | '/_homeLayout/upcoming'
     | '/_homeLayout/'
   fileRoutesById: FileRoutesById
 }
@@ -97,6 +133,27 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof HomeLayoutIndexRouteImport
+      parentRoute: typeof HomeLayoutRoute
+    }
+    '/_homeLayout/upcoming': {
+      id: '/_homeLayout/upcoming'
+      path: '/upcoming'
+      fullPath: '/upcoming'
+      preLoaderRoute: typeof HomeLayoutUpcomingRouteImport
+      parentRoute: typeof HomeLayoutRoute
+    }
+    '/_homeLayout/tv-series': {
+      id: '/_homeLayout/tv-series'
+      path: '/tv-series'
+      fullPath: '/tv-series'
+      preLoaderRoute: typeof HomeLayoutTvSeriesRouteImport
+      parentRoute: typeof HomeLayoutRoute
+    }
+    '/_homeLayout/movies': {
+      id: '/_homeLayout/movies'
+      path: '/movies'
+      fullPath: '/movies'
+      preLoaderRoute: typeof HomeLayoutMoviesRouteImport
       parentRoute: typeof HomeLayoutRoute
     }
     '/_authLayout/signup': {
@@ -131,10 +188,16 @@ const AuthLayoutRouteWithChildren = AuthLayoutRoute._addFileChildren(
 )
 
 interface HomeLayoutRouteChildren {
+  HomeLayoutMoviesRoute: typeof HomeLayoutMoviesRoute
+  HomeLayoutTvSeriesRoute: typeof HomeLayoutTvSeriesRoute
+  HomeLayoutUpcomingRoute: typeof HomeLayoutUpcomingRoute
   HomeLayoutIndexRoute: typeof HomeLayoutIndexRoute
 }
 
 const HomeLayoutRouteChildren: HomeLayoutRouteChildren = {
+  HomeLayoutMoviesRoute: HomeLayoutMoviesRoute,
+  HomeLayoutTvSeriesRoute: HomeLayoutTvSeriesRoute,
+  HomeLayoutUpcomingRoute: HomeLayoutUpcomingRoute,
   HomeLayoutIndexRoute: HomeLayoutIndexRoute,
 }
 
