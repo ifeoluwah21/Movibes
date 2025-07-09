@@ -1,6 +1,7 @@
 import {
   createFileRoute,
   Link,
+  redirect,
   Navigate,
   useNavigate,
 } from "@tanstack/react-router";
@@ -13,6 +14,11 @@ import * as Yup from "yup";
 import { useAuth } from "../../component/auth/useAuth";
 export const Route = createFileRoute("/_authLayout/signin")({
   component: RouteComponent,
+  beforeLoad({ context }) {
+    if (context.user) {
+      throw redirect({ to: "/", from: "/signin" });
+    }
+  },
 });
 
 const signInSchema = Yup.object({

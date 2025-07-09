@@ -1,6 +1,7 @@
 import { FaStar } from "react-icons/fa";
 import type { Trending } from "../api-utils";
 import type { PropsWithChildren } from "react";
+import { useNavigate } from "@tanstack/react-router";
 
 export const MovieCard: React.FC<{ [K in keyof Trending]: Trending[K] }> = ({
   name,
@@ -8,6 +9,7 @@ export const MovieCard: React.FC<{ [K in keyof Trending]: Trending[K] }> = ({
   poster_path,
   id,
 }) => {
+  const navigate = useNavigate();
   return (
     <article className="relative w-[185px]">
       <button
@@ -15,6 +17,7 @@ export const MovieCard: React.FC<{ [K in keyof Trending]: Trending[K] }> = ({
         className="cursor-pointer"
         onClick={() => {
           console.log(id);
+          navigate({ to: `/movies/${id}` });
         }}
       >
         <img
@@ -61,5 +64,5 @@ export const MovieCategoryHeader: React.FC<{ title: string }> = ({ title }) => {
 export const MovieCategoryLayout: React.FC<PropsWithChildren> = ({
   children,
 }) => {
-  return <section className="p-8">{children}</section>;
+  return <section className="py-8">{children}</section>;
 };

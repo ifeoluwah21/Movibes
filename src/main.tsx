@@ -4,8 +4,10 @@ import "./index.css";
 
 import { routeTree } from "./routeTree.gen.ts";
 import { createRouter, RouterProvider } from "@tanstack/react-router";
+import { useAuth } from "./component/auth/useAuth.tsx";
+import AuthProvider from "./component/auth/AuthContext.tsx";
 
-const router = createRouter({ routeTree });
+const router = createRouter({ routeTree, context: { user: undefined! } });
 
 declare module "@tanstack/react-router" {
   interface Register {
@@ -15,6 +17,12 @@ declare module "@tanstack/react-router" {
 
 createRoot(document.getElementById("root")!).render(
   // <StrictMode>
-  <RouterProvider router={router} />,
+  <AuthProvider>
+    <App />
+  </AuthProvider>,
   // {/* </StrictMode>, */}
 );
+export function App() {
+  const user = useAuth();
+  return <RouterProvider router={router} context={{ user }} />;
+}

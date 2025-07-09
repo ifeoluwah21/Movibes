@@ -1,15 +1,15 @@
 import React from "react";
 import { BsFillInfoCircleFill, BsPlayFill } from "react-icons/bs";
 
-const Hero: React.FC = () => {
+const Hero: React.FC<{ poster_path: string }> = ({ poster_path }) => {
   return (
-    <article className="px-8 py-10">
+    <article className="py-6">
       <figure className="relative">
         <img
-          src="https://image.tmdb.org/t/p/w780/7HqLLVjdjhXS0Qoz1SgZofhkIpE.jpg"
+          src={`https://image.tmdb.org/t/p/w780/${poster_path}`}
           // width="780"
           // height="439"
-          className="object-top-left h-80 w-full rounded-[20px] object-cover"
+          className="h-[500px] w-full rounded-[20px] object-cover object-center"
           alt=""
         />
         <div className="absolute bottom-6 right-6 flex items-center gap-4">

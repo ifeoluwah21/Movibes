@@ -64,10 +64,10 @@ const provider = new GoogleAuthProvider();
 export async function signInWithGoogle() {
   try {
     const result = await signInWithPopup(auth, provider);
-    const userCredentials = GoogleAuthProvider.credentialFromResult(result);
-    const token = userCredentials?.accessToken;
+    // const userCredentials = GoogleAuthProvider.credentialFromResult(result);
+    // const token = userCredentials?.accessToken;
     const user = result.user;
-    console.log(token, user, "User signed In");
+    return user;
   } catch (err) {
     console.log(err);
   }

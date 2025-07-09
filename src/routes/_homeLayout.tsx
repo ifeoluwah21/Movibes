@@ -1,4 +1,4 @@
-import { createFileRoute, Navigate, Outlet } from "@tanstack/react-router";
+import { createFileRoute, Outlet, redirect } from "@tanstack/react-router";
 import SideNav from "../component/ui/SideNav";
 import { Form, FormGroup } from "../component/ui/Form";
 import { Field, Formik } from "formik";
@@ -7,19 +7,19 @@ import userPhoto from "../assets/user.png";
 
 export const Route = createFileRoute("/_homeLayout")({
   component: RouteComponent,
+  beforeLoad({ context }) {
+    if (!context.user) {
+      throw redirect({ to: "/signin", from: "/" });
+    }
+  },
 });
 
 function RouteComponent() {
-  const user = useAuth();
-  if (!user) {
-    return <Navigate to="/signin" />;
-  }
-  return <HomeLayout></HomeLayout>;
+  return <HomeLayout />;
 }
 
 const HomeLayout = () => {
   const user = useAuth();
-  console.log(user);
   return (
     <main className="grid h-screen grid-cols-[226px_auto] grid-rows-[auto_1fr] overflow-y-clip text-white">
       <SideNav />

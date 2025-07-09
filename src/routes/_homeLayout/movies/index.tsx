@@ -4,17 +4,18 @@ import {
   getPopular,
   getUpcoming,
   months,
-} from "../../api-utils";
+} from "../../../api-utils";
 import {
   MovieCategoryHeader,
   MovieCategoryLayout,
   MovieContainer,
-} from "../../component/MovieCard";
-import Loading from "../../component/ui/Loading";
+} from "../../../component/MovieCard";
+import Loading from "../../../component/ui/Loading";
 
-export const Route = createFileRoute("/_homeLayout/movies")({
+export const Route = createFileRoute("/_homeLayout/movies/")({
   component: RouteComponent,
-  loader: () => {
+  loader: ({ context }) => {
+    console.log(context);
     const movieData = Promise.all([
       getAllTrending("movie"),
       getAllTrending("tv"),

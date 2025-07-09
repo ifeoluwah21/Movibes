@@ -14,6 +14,7 @@ import {
 import Loading from "../../component/ui/Loading";
 export const Route = createFileRoute("/_homeLayout/")({
   component: RouteComponent,
+
   loader: () => {
     const movieData = Promise.all([
       getAllTrending("movie"),
@@ -30,8 +31,12 @@ function RouteComponent() {
 
   const monthNum = new Date().getMonth();
   return (
-    <div className="scroll overflow-y-scroll text-white">
-      <Hero />
+    <section className="scroll overflow-y-scroll px-8 py-6 text-white">
+      <Await promise={deferredSlowData} fallback={<Loading />}>
+        {(data) => {
+          return <Hero poster_path={data[2][0].backdrop_path} />;
+        }}
+      </Await>
       <MovieCategoryLayout>
         <MovieCategoryHeader title="Trending" />
         <Await promise={deferredSlowData} fallback={<Loading />}>
@@ -64,6 +69,6 @@ function RouteComponent() {
           }}
         </Await>
       </MovieCategoryLayout>
-    </div>
+    </section>
   );
 }
