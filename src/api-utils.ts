@@ -54,18 +54,21 @@ export interface MovieDetails {
   id: number;
   imdb_id: string;
   original_title: string;
+  name: string;
   overview: string;
   popularity: number;
   poster_path: string;
   release_date: string;
+  first_air_date: string;
   status: string;
   tagline: string;
   title: string;
   runtime: number;
   vote_average: number;
+  created_by: { name: string }[];
 }
 
-export interface Trending {
+export interface Movie {
   backdrop_path: string;
   id: number;
   name: string;
@@ -89,25 +92,26 @@ export async function getAllTrending(type: "movie" | "tv") {
     `https://api.themoviedb.org/3/trending/${type}/week?language=en-US`,
     options,
   );
-  const data = res.data.results as Trending[];
+  const data = res.data.results as Movie[];
   return data;
 }
 
 export async function getUpcoming() {
   const res = await axios.get(
-    "https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=1",
+    `https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=1`,
     options,
   );
-  const data = res.data.results as Trending[];
+  const data = res.data.results as Movie[];
   return data;
 }
 
-export async function getPopular() {
+export async function getPopular(type: "movie" | "tv") {
   const res = await axios.get(
-    "https://api.themoviedb.org/3/movie/popular?language=en-US&page=1",
+    `https://api.themoviedb.org/3/${type}/popular?language=en-US&page=1`,
     options,
   );
-  const data = res.data.results as Trending[];
+  const data = res.data.results as Movie[];
+  console.log(data);
   return data;
 }
 

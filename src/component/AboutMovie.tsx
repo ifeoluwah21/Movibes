@@ -2,6 +2,7 @@ import type { FC } from "react";
 import type { MovieCast } from "../api-utils";
 
 const AboutMovie: FC<{
+  type: "movie" | "tv";
   title: string;
   releaseDate: number;
   runtime: number;
@@ -12,6 +13,7 @@ const AboutMovie: FC<{
 }> = ({
   title,
   releaseDate,
+  type,
   runtime,
   overview,
   director_name,
@@ -24,7 +26,7 @@ const AboutMovie: FC<{
         <h1>{title}</h1>
         <span>{releaseDate}</span>
         <span>PG-13</span>
-        <span>{runtime} mins</span>
+        {type === "movie" ? <span>{runtime} mins</span> : null}
       </div>
       <p className="border-white-100/25 border-b-[1px] py-4 text-justify">
         {overview}
@@ -32,9 +34,11 @@ const AboutMovie: FC<{
       <p className="border-white-100/25 border-b-[1px] py-4">
         Director : <span className="text-sky-50">{director_name}</span>
       </p>
-      <p className="border-white-100/25 border-b-[1px] py-4">
-        Writer : <span className="text-sky-50">{writers.join(", ")}</span>
-      </p>
+      {type === "movie" ? (
+        <p className="border-white-100/25 border-b-[1px] py-4">
+          Writer : <span className="text-sky-50">{writers.join(", ")}</span>
+        </p>
+      ) : null}
       <p className="border-white-100/25 border-b-[1px] py-4">
         Stars :{" "}
         <span className="text-sky-50">

@@ -1,13 +1,14 @@
 import { FaStar } from "react-icons/fa";
-import type { Trending } from "../api-utils";
+import type { Movie } from "../api-utils";
 import type { PropsWithChildren } from "react";
 import { useNavigate } from "@tanstack/react-router";
 
-export const MovieCard: React.FC<{ [K in keyof Trending]: Trending[K] }> = ({
+export const MovieCard: React.FC<{ [K in keyof Movie]: Movie[K] }> = ({
   name,
   vote_average,
   poster_path,
   id,
+  media_type,
 }) => {
   const navigate = useNavigate();
   return (
@@ -17,7 +18,7 @@ export const MovieCard: React.FC<{ [K in keyof Trending]: Trending[K] }> = ({
         className="cursor-pointer"
         onClick={() => {
           console.log(id);
-          navigate({ to: `/movies/${id}` });
+          navigate({ to: `/${media_type}/${id}` });
         }}
       >
         <img
@@ -37,11 +38,20 @@ export const MovieCard: React.FC<{ [K in keyof Trending]: Trending[K] }> = ({
   );
 };
 
-export const MovieContainer: React.FC<{ items: Trending[] }> = ({ items }) => {
+export const MovieContainer: React.FC<{
+  items: Movie[];
+  type: "movie" | "tv";
+}> = ({ items, type }) => {
   return (
     <div className="flex flex-row flex-wrap justify-between gap-x-6 gap-y-12">
       {items.map((item) => {
-        return <MovieCard key={item.id} {...item} />;
+        return (
+          <MovieCard
+            key={item.id}
+            {...item}
+            media_type={item.media_type || type}
+          />
+        );
       })}
     </div>
   );

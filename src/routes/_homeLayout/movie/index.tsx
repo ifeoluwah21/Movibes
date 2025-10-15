@@ -12,15 +12,13 @@ import {
 } from "../../../component/MovieCard";
 import Loading from "../../../component/ui/Loading";
 
-export const Route = createFileRoute("/_homeLayout/movies/")({
+export const Route = createFileRoute("/_homeLayout/movie/")({
   component: RouteComponent,
-  loader: ({ context }) => {
-    console.log(context);
+  loader: () => {
     const movieData = Promise.all([
       getAllTrending("movie"),
-      getAllTrending("tv"),
       getUpcoming(),
-      getPopular(),
+      getPopular("movie"),
     ]);
     return { deferredSlowData: movieData };
   },
@@ -31,19 +29,11 @@ function RouteComponent() {
 
   const monthNum = new Date().getMonth();
   return (
-    <div className="scroll overflow-y-scroll text-white">
+    <div className="scroll overflow-y-scroll px-8 py-6 text-white">
       <MovieCategoryLayout>
         <Await promise={deferredSlowData} fallback={<Loading />}>
           {(data) => {
-            return <MovieContainer items={data[0]} />;
-          }}
-        </Await>
-      </MovieCategoryLayout>
-      <MovieCategoryLayout>
-        <MovieCategoryHeader title="TV Series" />
-        <Await promise={deferredSlowData} fallback={<Loading />}>
-          {(data) => {
-            return <MovieContainer items={data[1]} />;
+            return <MovieContainer type={"movie"} items={data[0]} />;
           }}
         </Await>
       </MovieCategoryLayout>
@@ -51,7 +41,7 @@ function RouteComponent() {
         <MovieCategoryHeader title="Upcoming" />
         <Await promise={deferredSlowData} fallback={<Loading />}>
           {(data) => {
-            return <MovieContainer items={data[2]} />;
+            return <MovieContainer type={"movie"} items={data[1]} />;
           }}
         </Await>
       </MovieCategoryLayout>
@@ -59,7 +49,7 @@ function RouteComponent() {
         <MovieCategoryHeader title={` Popular movies on ${months[monthNum]}`} />
         <Await promise={deferredSlowData} fallback={<Loading />}>
           {(data) => {
-            return <MovieContainer items={data[3]} />;
+            return <MovieContainer type={"movie"} items={data[2]} />;
           }}
         </Await>
       </MovieCategoryLayout>

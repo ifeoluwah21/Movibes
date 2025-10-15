@@ -16,9 +16,9 @@ const SideNav: React.FC = () => {
       </figure>
       <ul className="flex h-full flex-col flex-nowrap space-y-12">
         <NavLink to="/" navIcon={<BiHome />} navTitle="Home" />
-        <NavLink to="/movies" navIcon={<BiVideo />} navTitle="Movies" />
+        <NavLink to="/movie" navIcon={<BiVideo />} navTitle="Movies" />
         <NavLink
-          to="/tv-series"
+          to="/tv"
           navIcon={<PiMonitorPlayBold />}
           navTitle="TV Series"
         />

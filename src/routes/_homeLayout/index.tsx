@@ -20,7 +20,7 @@ export const Route = createFileRoute("/_homeLayout/")({
       getAllTrending("movie"),
       getAllTrending("tv"),
       getUpcoming(),
-      getPopular(),
+      getPopular("tv"),
     ]);
     return { deferredSlowData: movieData };
   },
@@ -41,7 +41,8 @@ function RouteComponent() {
         <MovieCategoryHeader title="Trending" />
         <Await promise={deferredSlowData} fallback={<Loading />}>
           {(data) => {
-            return <MovieContainer items={data[0]} />;
+            console.log(data);
+            return <MovieContainer type={"movie"} items={data[0]} />;
           }}
         </Await>
       </MovieCategoryLayout>
@@ -49,7 +50,7 @@ function RouteComponent() {
         <MovieCategoryHeader title="TV Series" />
         <Await promise={deferredSlowData} fallback={<Loading />}>
           {(data) => {
-            return <MovieContainer items={data[1]} />;
+            return <MovieContainer type={"tv"} items={data[1]} />;
           }}
         </Await>
       </MovieCategoryLayout>
@@ -57,7 +58,7 @@ function RouteComponent() {
         <MovieCategoryHeader title="Upcoming" />
         <Await promise={deferredSlowData} fallback={<Loading />}>
           {(data) => {
-            return <MovieContainer items={data[2]} />;
+            return <MovieContainer type={"movie"} items={data[2]} />;
           }}
         </Await>
       </MovieCategoryLayout>
@@ -65,7 +66,7 @@ function RouteComponent() {
         <MovieCategoryHeader title={` Popular movies on ${months[monthNum]}`} />
         <Await promise={deferredSlowData} fallback={<Loading />}>
           {(data) => {
-            return <MovieContainer items={data[3]} />;
+            return <MovieContainer type={"movie"} items={data[3]} />;
           }}
         </Await>
       </MovieCategoryLayout>

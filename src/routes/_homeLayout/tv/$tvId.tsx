@@ -5,13 +5,13 @@ import AboutMovie from "../../../component/AboutMovie";
 import MovieCast from "../../../component/MovieCast";
 import LogoSpinner from "../../../component/ui/LogoSpinner";
 
-export const Route = createFileRoute("/_homeLayout/movies/$movieId")({
+export const Route = createFileRoute("/_homeLayout/tv/$tvId")({
   component: RouteComponent,
   loader: async ({ params }) => {
-    console.log(params.movieId);
+    console.log(params.tvId);
     const deferredSlowData = Promise.all([
-      getDetails("movie", +params.movieId),
-      getMovieCredits("movie", +params.movieId),
+      getDetails("tv", +params.tvId),
+      getMovieCredits("tv", +params.tvId),
     ]);
     return {
       deferredSlowData,
@@ -27,23 +27,23 @@ function RouteComponent() {
       <Await promise={deferredSlowData} fallback={<LogoSpinner />}>
         {(data) => {
           const [movieDetails, movieCredits] = data;
-          const director = movieCredits.crew.find(
-            (crew) => crew.job.toLowerCase() === "director",
-          );
+          console.log(data);
+          const director = movieDetails.created_by.map((i) => i.name);
           const writers = movieCredits.crew
             .filter((crew) => crew.department.toLowerCase() === "writing")
             .map((writer) => writer.original_name);
           console.log(director, writers);
-          const releaseDate = new Date(movieDetails.release_date);
+          const releaseDate = new Date(movieDetails.first_air_date);
           return (
             <>
               <Hero poster_path={movieDetails.backdrop_path} />
               <AboutMovie
+                type="tv"
                 stars={movieCredits.cast}
-                title={movieDetails.original_title}
+                title={movieDetails.name}
                 runtime={movieDetails.runtime}
                 releaseDate={releaseDate.getFullYear()}
-                director_name={director?.name || ""}
+                director_name={director.join(", ") || ""}
                 writers={writers}
                 overview={movieDetails.overview}
               />
