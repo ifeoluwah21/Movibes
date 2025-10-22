@@ -1,4 +1,20 @@
 import axios from "axios";
+
+export type MediaType = "movie" | "tv";
+
+export type ApiTrendingItem = {
+  media_type: MediaType;
+  id: number;
+  name?: string;
+  title?: string;
+  original_name?: string;
+  original_title?: string;
+  overview: string;
+  vote_average: number;
+  poster_path: string;
+  backdrop_path: string;
+};
+
 export const months = [
   "January",
   "February",
@@ -69,15 +85,28 @@ export interface MovieDetails {
 }
 
 export interface Movie {
-  backdrop_path: string;
+  media_type: "movie";
+  title: string;
+  original_title: string;
   id: number;
+  overview: string;
+  vote_average: number;
+  poster_path: string;
+  backdrop_path: string;
+}
+
+export interface Tv {
+  media_type: "tv";
   name: string;
   original_name: string;
+  id: number;
   overview: string;
-  poster_path: string;
-  media_type: "tv" | "movie";
   vote_average: number;
+  poster_path: string;
+  backdrop_path: string;
 }
+
+export type MediaItem = Movie | Tv;
 
 const options = {
   method: "GET",
@@ -87,13 +116,38 @@ const options = {
   },
 };
 
-export async function getAllTrending(type: "movie" | "tv") {
+export async function getAllTrending(type?: "movie" | "tv") {
   const res = await axios.get(
-    `https://api.themoviedb.org/3/trending/${type}/week?language=en-US`,
+    `https://api.themoviedb.org/3/trending/all/day?language=en-US`,
     options,
   );
-  const data = res.data.results as Movie[];
-  return data;
+  const data = res.data.results as ApiTrendingItem[];
+  const parsedData: MediaItem[] = data.map((item) => {
+    if (item.media_type === "movie") {
+      return {
+        media_type: item.media_type,
+        title: item.title || "",
+        original_title: item.original_title || "",
+        id: item.id,
+        overview: item.overview,
+        vote_average: item.vote_average,
+        poster_path: item.poster_path,
+        backdrop_path: item.backdrop_path,
+      } as Movie;
+    } else {
+      return {
+        media_type: item.media_type,
+        name: item.name || "",
+        original_name: item.original_name || "",
+        id: item.id,
+        overview: item.overview,
+        vote_average: item.vote_average,
+        poster_path: item.poster_path,
+        backdrop_path: item.backdrop_path,
+      } as Tv;
+    }
+  });
+  return parsedData;
 }
 
 export async function getUpcoming() {
