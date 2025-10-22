@@ -36,7 +36,7 @@ export const MediaCard: React.FC<{ media: MediaItem }> = ({ media }) => {
 
 export const MediaContainer: React.FC<{
   items: MediaItem[];
-  type: "movie" | "tv";
+  type?: "movie" | "tv";
 }> = ({ items }) => {
   return (
     <div className="flex flex-row flex-wrap justify-between gap-x-6 gap-y-12">

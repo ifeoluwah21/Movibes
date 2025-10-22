@@ -150,6 +150,28 @@ export async function getAllTrending(type?: "movie" | "tv") {
   return parsedData;
 }
 
+export async function getPopularMovies() {
+  const resp = await axios.get(
+    "https://api.themoviedb.org/3/movie/popular?language=en-US&page=1",
+    options,
+  );
+  const data = resp.data.results as ApiTrendingItem[];
+  const parseData = data.map((item) => {
+    return {
+      media_type: item.media_type || "movie",
+      title: item.title || "",
+      original_title: item.original_title || "",
+      id: item.id,
+      overview: item.overview,
+      vote_average: item.vote_average,
+      poster_path: item.poster_path,
+      backdrop_path: item.backdrop_path,
+    } as Movie;
+  });
+
+  return parseData;
+}
+
 export async function getUpcoming() {
   const res = await axios.get(
     `https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=1`,

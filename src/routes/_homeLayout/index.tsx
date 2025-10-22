@@ -8,6 +8,7 @@ import Hero from "../../component/Hero";
 import {
   getAllTrending,
   getPopular,
+  getPopularMovies,
   getUpcoming,
   months,
 } from "../../api-utils";
@@ -20,7 +21,7 @@ export const Route = createFileRoute("/_homeLayout/")({
   loader: () => {
     const movieData = Promise.all([
       getAllTrending(),
-      getAllTrending(),
+      getPopularMovies(),
       getUpcoming(),
       getPopular("tv"),
     ]);
@@ -44,15 +45,16 @@ function RouteComponent() {
         <Await promise={deferredSlowData} fallback={<Loading />}>
           {(data) => {
             console.log(data);
-            return <MediaContainer type={"movie"} items={data[0]} />;
+            return <MediaContainer items={data[0]} />;
           }}
         </Await>
       </MediaCategoryLayout>
       <MediaCategoryLayout>
-        <MediaCategoryHeader title="TV Series" />
+        <MediaCategoryHeader title={`Popular movies on ${months[monthNum]}`} />
         <Await promise={deferredSlowData} fallback={<Loading />}>
           {(data) => {
-            return <MediaContainer type={"tv"} items={data[1]} />;
+            console.log(data[1], "popular movies");
+            return <MediaContainer items={data[1]} />;
           }}
         </Await>
       </MediaCategoryLayout>
@@ -65,7 +67,7 @@ function RouteComponent() {
         </Await>
       </MediaCategoryLayout>
       <MediaCategoryLayout>
-        <MediaCategoryHeader title={` Popular movies on ${months[monthNum]}`} />
+        <MediaCategoryHeader title={"TV Series"} />
         <Await promise={deferredSlowData} fallback={<Loading />}>
           {(data) => {
             return <MediaContainer type={"movie"} items={data[3]} />;
