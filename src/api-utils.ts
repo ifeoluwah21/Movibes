@@ -215,24 +215,24 @@ export async function getUpcomingMovies() {
 
   return parsedData;
 }
-// export async function getUpcoming() {
-//   const res = await axios.get(
-//     `https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=1`,
-//     options,
-//   );
-//   const data = res.data.results as Movie[];
-//   return data;
-// }
+export async function getUpcoming() {
+  const res = await axios.get(
+    `https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=1`,
+    options,
+  );
+  const data = res.data.results as Movie[];
+  return data;
+}
 
-// export async function getPopular(type: "movie" | "tv") {
-//   const res = await axios.get(
-//     `https://api.themoviedb.org/3/${type}/popular?language=en-US&page=1`,
-//     options,
-//   );
-//   const data = res.data.results as Movie[];
-//   console.log(data);
-//   return data;
-// }
+export async function getPopular(type: "movie" | "tv") {
+  const res = await axios.get(
+    `https://api.themoviedb.org/3/${type}/popular?language=en-US&page=1`,
+    options,
+  );
+  const data = res.data.results as Movie[];
+  console.log(data);
+  return data;
+}
 
 export async function getDetails(type: "movie" | "tv", id: number) {
   const res = await axios.get(
