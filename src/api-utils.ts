@@ -172,24 +172,67 @@ export async function getPopularMovies() {
   return parseData;
 }
 
-export async function getUpcoming() {
-  const res = await axios.get(
-    `https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=1`,
+export async function getTrendingTV() {
+  const resp = await axios.get(
+    "https://api.themoviedb.org/3/trending/tv/week?language=en-US",
     options,
   );
-  const data = res.data.results as Movie[];
-  return data;
+  const data = resp.data.results as ApiTrendingItem[];
+  const parsedData = data.map((item) => {
+    return {
+      media_type: item.media_type || "tv",
+      name: item.name || "",
+      original_name: item.original_name || "",
+      id: item.id,
+      overview: item.overview,
+      vote_average: item.vote_average,
+      poster_path: item.poster_path,
+      backdrop_path: item.backdrop_path,
+    } as Tv;
+  });
+
+  return parsedData;
 }
 
-export async function getPopular(type: "movie" | "tv") {
-  const res = await axios.get(
-    `https://api.themoviedb.org/3/${type}/popular?language=en-US&page=1`,
+export async function getUpcomingMovies() {
+  const resp = await axios.get(
+    "https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=1",
     options,
   );
-  const data = res.data.results as Movie[];
-  console.log(data);
-  return data;
+  const data = resp.data.results as ApiTrendingItem[];
+  const parsedData = data.map((item) => {
+    return {
+      media_type: item.media_type || "movie",
+      title: item.title || "",
+      original_title: item.original_title || "",
+      id: item.id,
+      overview: item.overview,
+      vote_average: item.vote_average,
+      poster_path: item.poster_path,
+      backdrop_path: item.backdrop_path,
+    } as Movie;
+  });
+
+  return parsedData;
 }
+// export async function getUpcoming() {
+//   const res = await axios.get(
+//     `https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=1`,
+//     options,
+//   );
+//   const data = res.data.results as Movie[];
+//   return data;
+// }
+
+// export async function getPopular(type: "movie" | "tv") {
+//   const res = await axios.get(
+//     `https://api.themoviedb.org/3/${type}/popular?language=en-US&page=1`,
+//     options,
+//   );
+//   const data = res.data.results as Movie[];
+//   console.log(data);
+//   return data;
+// }
 
 export async function getDetails(type: "movie" | "tv", id: number) {
   const res = await axios.get(
