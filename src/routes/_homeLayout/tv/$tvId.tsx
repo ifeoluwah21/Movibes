@@ -54,7 +54,7 @@ function RouteComponent() {
                 writers={writers}
                 overview={tvDetails.overview}
               />
-              <MovieCast credits={tvCredits} />
+              <MovieCast {...tvCredits} />
             </>
           );
         }}

@@ -99,7 +99,7 @@ export type TvDetails = {
   poster_path: string;
   backdrop_path: string;
 };
-type MediaItem = Movie | Tv;
+export type MediaItem = Movie | Tv;
 export type MediaCredits = {
   id: number;
   crew: MediaCrew[];
