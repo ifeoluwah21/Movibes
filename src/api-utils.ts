@@ -30,7 +30,7 @@ export const months = [
   "December",
 ];
 
-export interface MovieCast {
+export interface MediaCast {
   id: number;
   known_for_department: string;
   name: string;
@@ -41,7 +41,7 @@ export interface MovieCast {
   character: string;
   credit_id: string;
 }
-export interface MovieCrew {
+export interface MediaCrew {
   id: number;
   known_for_department: string;
   name: string;
@@ -51,12 +51,6 @@ export interface MovieCrew {
   credit_id: string;
   department: string;
   job: string;
-}
-
-export interface MovieCredit {
-  id: number;
-  cast: MovieCast[];
-  crew: MovieCrew[];
 }
 
 interface MovieGenre {
@@ -317,6 +311,20 @@ export async function getMediaDetails(media_type: MediaType, id: number) {
       backdrop_path: data.backdrop_path,
     } as TvDetails;
   }
+}
+
+export type MediaCredits = {
+  id: number;
+  crew: MediaCrew[];
+  cast: MediaCast[];
+};
+export async function getMediaCredits(media_type: MediaType, id: number) {
+  const resp = await axios.get(
+    `https://api.themoviedb.org/3/${media_type}/${id}/credits?language=en-US`,
+    options,
+  );
+  const data = resp.data as MediaCredits;
+  return data;
 }
 
 export async function getDetails(type: "movie" | "tv", id: number) {

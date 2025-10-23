@@ -1,9 +1,9 @@
 import { Await, createFileRoute } from "@tanstack/react-router";
 import Hero from "../../../component/Hero";
 import {
+  getMediaCredits,
   getMediaDetails,
-  getMovieCredits,
-  type MovieCredit,
+  type MediaCredits,
   type MovieDetail,
 } from "../../../api-utils";
 import AboutMovie from "../../../component/AboutMovie";
@@ -16,7 +16,7 @@ export const Route = createFileRoute("/_homeLayout/movie/$movieId")({
     console.log(params.movieId);
     const deferredSlowData = Promise.all([
       getMediaDetails("movie", +params.movieId),
-      getMovieCredits("movie", +params.movieId),
+      getMediaCredits("movie", +params.movieId),
     ]);
     return {
       deferredSlowData,
@@ -33,7 +33,7 @@ function RouteComponent() {
         {(data) => {
           const [movieDetails, movieCredits] = data as [
             MovieDetail,
-            MovieCredit,
+            MediaCredits,
           ];
           const director = movieCredits.crew.find(
             (crew) => crew.job.toLowerCase() === "director",
