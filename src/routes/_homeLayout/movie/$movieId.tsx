@@ -47,9 +47,11 @@ function RouteComponent() {
             <>
               <Hero poster_path={movieDetails.backdrop_path} />
               <AboutMovie
-                type="movie"
+                media_type="movie"
                 stars={movieCredits.cast}
                 title={movieDetails.original_title}
+                genres={movieDetails.genres}
+                production_companies={movieDetails.production_companies}
                 runtime={movieDetails.runtime}
                 releaseDate={releaseDate.getFullYear()}
                 director_name={director?.name || ""}

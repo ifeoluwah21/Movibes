@@ -1,8 +1,50 @@
 import axios from "axios";
 
-export type MediaType = "movie" | "tv";
+export interface MediaCast {
+  id: number;
+  known_for_department: string;
+  name: string;
+  original_name: string;
+  popularity: number;
+  profile_path: string;
+  cast_id: number;
+  character: string;
+  credit_id: string;
+}
+interface MediaCrew {
+  id: number;
+  known_for_department: string;
+  name: string;
+  original_name: string;
+  popularity: number;
+  profile_path: string;
+  credit_id: string;
+  department: string;
+  job: string;
+}
+interface Movie {
+  media_type: "movie";
+  title: string;
+  original_title: string;
+  id: number;
+  overview: string;
+  vote_average: number;
+  poster_path: string;
+  backdrop_path: string;
+}
+interface Tv {
+  media_type: "tv";
+  name: string;
+  original_name: string;
+  id: number;
+  overview: string;
+  vote_average: number;
+  poster_path: string;
+  backdrop_path: string;
+}
 
-export type ApiTrendingItem = {
+export type MediaType = "movie" | "tv";
+type ApiTrendingItem = {
   media_type: MediaType;
   id: number;
   name?: string;
@@ -13,6 +55,55 @@ export type ApiTrendingItem = {
   vote_average: number;
   poster_path: string;
   backdrop_path: string;
+};
+export type Info = {
+  name: string;
+  id: number;
+};
+type ApiMediaDetails = {
+  title?: string;
+  original_title?: string;
+  name?: string;
+  original_name?: string;
+  created_by?: Info[];
+  genres: Info[];
+  overview: string;
+  production_companies: Info[];
+  release_date?: string;
+  first_air_date?: string;
+  runtime?: number;
+  poster_path: string;
+  backdrop_path: string;
+};
+export type MovieDetail = {
+  media_type: "movie";
+  title: string;
+  original_title: string;
+  overview: string;
+  genres: Info[];
+  production_companies: Info[];
+  release_date: string;
+  runtime: number;
+  poster_path: string;
+  backdrop_path: string;
+};
+export type TvDetails = {
+  media_type: "tv";
+  name: string;
+  original_name: string;
+  overview: string;
+  created_by: Info[];
+  genres: Info[];
+  production_companies: Info[];
+  first_air_date: string;
+  poster_path: string;
+  backdrop_path: string;
+};
+type MediaItem = Movie | Tv;
+export type MediaCredits = {
+  id: number;
+  crew: MediaCrew[];
+  cast: MediaCast[];
 };
 
 export const months = [
@@ -29,79 +120,6 @@ export const months = [
   "November",
   "December",
 ];
-
-export interface MediaCast {
-  id: number;
-  known_for_department: string;
-  name: string;
-  original_name: string;
-  popularity: number;
-  profile_path: string;
-  cast_id: number;
-  character: string;
-  credit_id: string;
-}
-export interface MediaCrew {
-  id: number;
-  known_for_department: string;
-  name: string;
-  original_name: string;
-  popularity: number;
-  profile_path: string;
-  credit_id: string;
-  department: string;
-  job: string;
-}
-
-interface MovieGenre {
-  id: number;
-  name: string;
-}
-export interface MovieDetails {
-  backdrop_path: string;
-  genres: MovieGenre[];
-  homepage: string;
-  id: number;
-  imdb_id: string;
-  original_title: string;
-  name: string;
-  overview: string;
-  popularity: number;
-  poster_path: string;
-  release_date: string;
-  first_air_date: string;
-  status: string;
-  tagline: string;
-  title: string;
-  runtime: number;
-  vote_average: number;
-  created_by: { name: string }[];
-}
-
-export interface Movie {
-  media_type: "movie";
-  title: string;
-  original_title: string;
-  id: number;
-  overview: string;
-  vote_average: number;
-  poster_path: string;
-  backdrop_path: string;
-}
-
-export interface Tv {
-  media_type: "tv";
-  name: string;
-  original_name: string;
-  id: number;
-  overview: string;
-  vote_average: number;
-  poster_path: string;
-  backdrop_path: string;
-}
-
-export type MediaItem = Movie | Tv;
-
 const options = {
   method: "GET",
   headers: {
@@ -231,53 +249,6 @@ export async function getPopularTV() {
   return parsedData;
 }
 
-type Info = {
-  name: string;
-  id: number;
-};
-
-type ApiMediaDetails = {
-  title?: string;
-  original_title?: string;
-  name?: string;
-  original_name?: string;
-  created_by?: Info[];
-  genre: Info[];
-  overview: string;
-  production_companies: Info[];
-  release_date?: string;
-  first_air_date?: string;
-  runtime?: number;
-  poster_path: string;
-  backdrop_path: string;
-};
-
-export type MovieDetail = {
-  media_type: "movie";
-  title: string;
-  original_title: string;
-  overview: string;
-  genres: Info[];
-  production_companies: Info[];
-  release_date: string;
-  runtime: number;
-  poster_path: string;
-  backdrop_path: string;
-};
-
-export type TvDetails = {
-  media_type: "tv";
-  name: string;
-  original_name: string;
-  overview: string;
-  created_by: Info[];
-  genres: Info[];
-  production_companies: Info[];
-  first_air_date: string;
-  poster_path: string;
-  backdrop_path: string;
-};
-
 export async function getMediaDetails(media_type: MediaType, id: number) {
   const resp = await axios.get(
     `https://api.themoviedb.org/3/${media_type}/${id}?language=en-US`,
@@ -290,7 +261,7 @@ export async function getMediaDetails(media_type: MediaType, id: number) {
       title: data.title || "",
       original_title: data.original_title || "",
       overview: data.overview,
-      genres: data.genre,
+      genres: data.genres,
       production_companies: data.production_companies,
       release_date: data.release_date,
       runtime: data.runtime || 0,
@@ -304,7 +275,7 @@ export async function getMediaDetails(media_type: MediaType, id: number) {
       original_name: data.original_name || "",
       overview: data.overview,
       created_by: data.created_by,
-      genres: data.genre,
+      genres: data.genres,
       production_companies: data.production_companies,
       first_air_date: data.first_air_date,
       poster_path: data.poster_path,
@@ -313,35 +284,11 @@ export async function getMediaDetails(media_type: MediaType, id: number) {
   }
 }
 
-export type MediaCredits = {
-  id: number;
-  crew: MediaCrew[];
-  cast: MediaCast[];
-};
 export async function getMediaCredits(media_type: MediaType, id: number) {
   const resp = await axios.get(
     `https://api.themoviedb.org/3/${media_type}/${id}/credits?language=en-US`,
     options,
   );
   const data = resp.data as MediaCredits;
-  return data;
-}
-
-export async function getDetails(type: "movie" | "tv", id: number) {
-  const res = await axios.get(
-    `https://api.themoviedb.org/3/${type}/${id}?language=en-US`,
-    options,
-  );
-  const data = res.data as MovieDetails;
-  return data;
-}
-
-export async function getMovieCredits(type: "movie" | "tv", id: number) {
-  console.log(1);
-  const res = await axios.get(
-    `https://api.themoviedb.org/3/${type}/${id}/credits?language=en-US`,
-    options,
-  );
-  const data = res.data as MovieCredit;
   return data;
 }

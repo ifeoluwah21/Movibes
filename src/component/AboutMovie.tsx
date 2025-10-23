@@ -1,24 +1,28 @@
 import type { FC } from "react";
-import type { MovieCast } from "../api-utils";
+import type { MediaType, MediaCast, Info } from "../api-utils";
 
 const AboutMovie: FC<{
-  type: "movie" | "tv";
+  media_type: MediaType;
   title: string;
   releaseDate: number;
   runtime: number;
   overview: string;
   director_name: string;
   writers: string[];
-  stars: MovieCast[];
+  stars: MediaCast[];
+  genres: Info[];
+  production_companies: Info[];
 }> = ({
   title,
   releaseDate,
-  type,
+  media_type,
   runtime,
   overview,
   director_name,
   writers,
   stars,
+  genres,
+  production_companies,
 }) => {
   return (
     <section className="mb-6">
@@ -26,15 +30,27 @@ const AboutMovie: FC<{
         <h1>{title}</h1>
         <span>{releaseDate}</span>
         <span>PG-13</span>
-        {type === "movie" ? <span>{runtime} mins</span> : null}
+        {media_type === "movie" ? <span>{runtime} mins</span> : null}
       </div>
       <p className="border-white-100/25 border-b-[1px] py-4 text-justify">
         {overview}
       </p>
       <p className="border-white-100/25 border-b-[1px] py-4">
+        Genres :{" "}
+        <span className="text-sky-50">
+          {genres.map((genre) => genre.name).join(", ")}
+        </span>
+      </p>
+      <p className="border-white-100/25 border-b-[1px] py-4">
+        Production :{" "}
+        <span className="text-sky-50">
+          {production_companies.map((genre) => genre.name).join(", ")}
+        </span>
+      </p>
+      <p className="border-white-100/25 border-b-[1px] py-4">
         Director : <span className="text-sky-50">{director_name}</span>
       </p>
-      {type === "movie" ? (
+      {media_type === "movie" ? (
         <p className="border-white-100/25 border-b-[1px] py-4">
           Writer : <span className="text-sky-50">{writers.join(", ")}</span>
         </p>
