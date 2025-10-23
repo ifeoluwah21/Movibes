@@ -1,6 +1,11 @@
 import { Await, createFileRoute } from "@tanstack/react-router";
 import Hero from "../../../component/Hero";
-import { getDetails, getMovieCredits } from "../../../api-utils";
+import {
+  getMediaDetails,
+  getMovieCredits,
+  type MovieCredit,
+  type MovieDetail,
+} from "../../../api-utils";
 import AboutMovie from "../../../component/AboutMovie";
 import MovieCast from "../../../component/MovieCast";
 import LogoSpinner from "../../../component/ui/LogoSpinner";
@@ -10,7 +15,7 @@ export const Route = createFileRoute("/_homeLayout/movie/$movieId")({
   loader: async ({ params }) => {
     console.log(params.movieId);
     const deferredSlowData = Promise.all([
-      getDetails("movie", +params.movieId),
+      getMediaDetails("movie", +params.movieId),
       getMovieCredits("movie", +params.movieId),
     ]);
     return {
@@ -26,7 +31,10 @@ function RouteComponent() {
     <section className="font-Poppins scroll overflow-y-scroll px-10 py-4">
       <Await promise={deferredSlowData} fallback={<LogoSpinner />}>
         {(data) => {
-          const [movieDetails, movieCredits] = data;
+          const [movieDetails, movieCredits] = data as [
+            MovieDetail,
+            MovieCredit,
+          ];
           const director = movieCredits.crew.find(
             (crew) => crew.job.toLowerCase() === "director",
           );

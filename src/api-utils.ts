@@ -116,7 +116,7 @@ const options = {
   },
 };
 
-export async function getAllTrending(type?: "movie" | "tv") {
+export async function getAllTrending() {
   const res = await axios.get(
     `https://api.themoviedb.org/3/trending/all/day?language=en-US`,
     options,
@@ -236,23 +236,87 @@ export async function getPopularTV() {
   });
   return parsedData;
 }
-export async function getUpcoming() {
-  const res = await axios.get(
-    `https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=1`,
-    options,
-  );
-  const data = res.data.results as Movie[];
-  return data;
-}
 
-export async function getPopular(type: "movie" | "tv") {
-  const res = await axios.get(
-    `https://api.themoviedb.org/3/${type}/popular?language=en-US&page=1`,
+type Info = {
+  name: string;
+  id: number;
+};
+
+type ApiMediaDetails = {
+  title?: string;
+  original_title?: string;
+  name?: string;
+  original_name?: string;
+  created_by?: Info[];
+  genre: Info[];
+  overview: string;
+  production_companies: Info[];
+  release_date?: string;
+  first_air_date?: string;
+  runtime?: number;
+  poster_path: string;
+  backdrop_path: string;
+};
+
+export type MovieDetail = {
+  media_type: "movie";
+  title: string;
+  original_title: string;
+  overview: string;
+  genres: Info[];
+  production_companies: Info[];
+  release_date: string;
+  runtime: number;
+  poster_path: string;
+  backdrop_path: string;
+};
+
+export type TvDetails = {
+  media_type: "tv";
+  name: string;
+  original_name: string;
+  overview: string;
+  created_by: Info[];
+  genres: Info[];
+  production_companies: Info[];
+  first_air_date: string;
+  poster_path: string;
+  backdrop_path: string;
+};
+
+export async function getMediaDetails(media_type: MediaType, id: number) {
+  const resp = await axios.get(
+    `https://api.themoviedb.org/3/${media_type}/${id}?language=en-US`,
     options,
   );
-  const data = res.data.results as Movie[];
-  console.log(data);
-  return data;
+  const data = resp.data as ApiMediaDetails;
+  if (media_type === "movie") {
+    return {
+      media_type,
+      title: data.title || "",
+      original_title: data.original_title || "",
+      overview: data.overview,
+      genres: data.genre,
+      production_companies: data.production_companies,
+      release_date: data.release_date,
+      runtime: data.runtime || 0,
+      poster_path: data.poster_path,
+      backdrop_path: data.backdrop_path,
+    } as MovieDetail;
+  } else {
+    return {
+      media_type,
+      name: data.name || "",
+      original_name: data.original_name || "",
+      overview: data.overview,
+      created_by: data.created_by,
+      genres: data.genre,
+      production_companies: data.production_companies,
+      first_air_date: data.first_air_date,
+      poster_path: data.poster_path,
+      backdrop_path: data.backdrop_path,
+    } as TvDetails;
+  }
 }
 
 export async function getDetails(type: "movie" | "tv", id: number) {
