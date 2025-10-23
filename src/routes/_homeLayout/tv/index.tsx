@@ -1,5 +1,5 @@
 import { Await, createFileRoute } from "@tanstack/react-router";
-import { getAllTrending, getPopularMovies, months } from "../../../api-utils";
+import { getPopularTV, getTrendingTV, months } from "../../../api-utils";
 import {
   MediaCategoryHeader,
   MediaCategoryLayout,
@@ -10,7 +10,7 @@ import Loading from "../../../component/ui/Loading";
 export const Route = createFileRoute("/_homeLayout/tv/")({
   component: RouteComponent,
   loader: () => {
-    const movieData = Promise.all([getAllTrending("tv"), getPopularMovies()]);
+    const movieData = Promise.all([getTrendingTV(), getPopularTV()]);
     return { deferredSlowData: movieData };
   },
 });
@@ -24,7 +24,7 @@ function RouteComponent() {
       <MediaCategoryLayout>
         <Await promise={deferredSlowData} fallback={<Loading />}>
           {(data) => {
-            return <MediaContainer type={"tv"} items={data[0]} />;
+            return <MediaContainer items={data[0]} />;
           }}
         </Await>
       </MediaCategoryLayout>
@@ -34,7 +34,7 @@ function RouteComponent() {
         />
         <Await promise={deferredSlowData} fallback={<Loading />}>
           {(data) => {
-            return <MediaContainer type={"tv"} items={data[1]} />;
+            return <MediaContainer items={data[1]} />;
           }}
         </Await>
       </MediaCategoryLayout>

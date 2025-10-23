@@ -215,6 +215,27 @@ export async function getUpcomingMovies() {
 
   return parsedData;
 }
+
+export async function getPopularTV() {
+  const resp = await axios(
+    "https://api.themoviedb.org/3/tv/airing_today?language=en-US&page=1",
+    options,
+  );
+  const data = resp.data.results as ApiTrendingItem[];
+  const parsedData = data.map((item) => {
+    return {
+      media_type: item.media_type || "tv",
+      name: item.name || "",
+      original_name: item.original_name || "",
+      id: item.id,
+      overview: item.overview,
+      vote_average: item.vote_average,
+      poster_path: item.poster_path,
+      backdrop_path: item.backdrop_path,
+    } as Tv;
+  });
+  return parsedData;
+}
 export async function getUpcoming() {
   const res = await axios.get(
     `https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=1`,
