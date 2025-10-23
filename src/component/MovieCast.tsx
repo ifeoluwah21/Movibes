@@ -1,5 +1,5 @@
 import React from "react";
-import type { MovieCredit } from "../api-utils";
+import type { MediaCredits } from "../api-utils";
 
 const Cast: React.FC<{
   profile_path: string;
@@ -20,14 +20,12 @@ const Cast: React.FC<{
     </article>
   );
 };
-const MovieCast: React.FC<{
-  credits: MovieCredit;
-}> = ({ credits }) => {
+const MovieCast: React.FC<MediaCredits> = ({ cast }) => {
   return (
     <section className="space-y-6">
       <h2 className="text-xl font-semibold">Top Cast</h2>
       <div className="scroll flex gap-24 overflow-x-scroll">
-        {credits.cast.slice(0, 5).map((credit) => (
+        {cast.slice(0, 5).map((credit) => (
           <Cast
             key={credit.id}
             profile_path={credit.profile_path}

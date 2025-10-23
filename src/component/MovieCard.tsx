@@ -1,16 +1,12 @@
 import { FaStar } from "react-icons/fa";
-import type { Movie } from "../api-utils";
+import type { MediaItem } from "../api-utils";
 import type { PropsWithChildren } from "react";
 import { useNavigate } from "@tanstack/react-router";
 
-export const MovieCard: React.FC<{ [K in keyof Movie]: Movie[K] }> = ({
-  name,
-  vote_average,
-  poster_path,
-  id,
-  media_type,
-}) => {
+export const MediaCard: React.FC<{ media: MediaItem }> = ({ media }) => {
   const navigate = useNavigate();
+  const { media_type, id, vote_average, poster_path } = media;
+  const name = media_type === "movie" ? media.title : media.name;
   return (
     <article className="relative w-[185px]">
       <button
@@ -38,26 +34,20 @@ export const MovieCard: React.FC<{ [K in keyof Movie]: Movie[K] }> = ({
   );
 };
 
-export const MovieContainer: React.FC<{
-  items: Movie[];
-  type: "movie" | "tv";
-}> = ({ items, type }) => {
+export const MediaContainer: React.FC<{
+  items: MediaItem[];
+  type?: "movie" | "tv";
+}> = ({ items }) => {
   return (
     <div className="flex flex-row flex-wrap justify-between gap-x-6 gap-y-12">
       {items.map((item) => {
-        return (
-          <MovieCard
-            key={item.id}
-            {...item}
-            media_type={item.media_type || type}
-          />
-        );
+        return <MediaCard key={item.id} media={item} />;
       })}
     </div>
   );
 };
 
-export const MovieCategoryHeader: React.FC<{ title: string }> = ({ title }) => {
+export const MediaCategoryHeader: React.FC<{ title: string }> = ({ title }) => {
   return (
     <div className="mb-8 flex justify-between">
       <h2 className="text-white-100 text-2xl font-semibold">{title}</h2>
@@ -71,7 +61,7 @@ export const MovieCategoryHeader: React.FC<{ title: string }> = ({ title }) => {
   );
 };
 
-export const MovieCategoryLayout: React.FC<PropsWithChildren> = ({
+export const MediaCategoryLayout: React.FC<PropsWithChildren> = ({
   children,
 }) => {
   return <section className="py-8">{children}</section>;

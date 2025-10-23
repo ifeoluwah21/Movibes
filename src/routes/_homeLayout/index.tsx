@@ -1,26 +1,29 @@
 import { Await, createFileRoute } from "@tanstack/react-router";
 import {
-  MovieCategoryHeader,
-  MovieCategoryLayout,
-  MovieContainer,
+  MediaCategoryHeader,
+  MediaCategoryLayout,
+  MediaContainer,
 } from "../../component/MovieCard";
 import Hero from "../../component/Hero";
 import {
   getAllTrending,
-  getPopular,
-  getUpcoming,
+  getPopularMovies,
+  getTrendingTV,
+  getUpcomingMovies,
   months,
 } from "../../api-utils";
 import Loading from "../../component/ui/Loading";
+
+//Home Page
 export const Route = createFileRoute("/_homeLayout/")({
   component: RouteComponent,
 
   loader: () => {
     const movieData = Promise.all([
-      getAllTrending("movie"),
-      getAllTrending("tv"),
-      getUpcoming(),
-      getPopular("tv"),
+      getAllTrending(),
+      getPopularMovies(),
+      getUpcomingMovies(),
+      getTrendingTV(),
     ]);
     return { deferredSlowData: movieData };
   },
@@ -37,39 +40,40 @@ function RouteComponent() {
           return <Hero poster_path={data[2][0].backdrop_path} />;
         }}
       </Await>
-      <MovieCategoryLayout>
-        <MovieCategoryHeader title="Trending" />
+      <MediaCategoryLayout>
+        <MediaCategoryHeader title="Trending" />
         <Await promise={deferredSlowData} fallback={<Loading />}>
           {(data) => {
             console.log(data);
-            return <MovieContainer type={"movie"} items={data[0]} />;
+            return <MediaContainer items={data[0]} />;
           }}
         </Await>
-      </MovieCategoryLayout>
-      <MovieCategoryLayout>
-        <MovieCategoryHeader title="TV Series" />
+      </MediaCategoryLayout>
+      <MediaCategoryLayout>
+        <MediaCategoryHeader title={`Popular movies on ${months[monthNum]}`} />
         <Await promise={deferredSlowData} fallback={<Loading />}>
           {(data) => {
-            return <MovieContainer type={"tv"} items={data[1]} />;
+            console.log(data[1], "popular movies");
+            return <MediaContainer items={data[1]} />;
           }}
         </Await>
-      </MovieCategoryLayout>
-      <MovieCategoryLayout>
-        <MovieCategoryHeader title="Upcoming" />
+      </MediaCategoryLayout>
+      <MediaCategoryLayout>
+        <MediaCategoryHeader title="Upcoming" />
         <Await promise={deferredSlowData} fallback={<Loading />}>
           {(data) => {
-            return <MovieContainer type={"movie"} items={data[2]} />;
+            return <MediaContainer items={data[2]} />;
           }}
         </Await>
-      </MovieCategoryLayout>
-      <MovieCategoryLayout>
-        <MovieCategoryHeader title={` Popular movies on ${months[monthNum]}`} />
+      </MediaCategoryLayout>
+      <MediaCategoryLayout>
+        <MediaCategoryHeader title={"TV Series"} />
         <Await promise={deferredSlowData} fallback={<Loading />}>
           {(data) => {
-            return <MovieContainer type={"movie"} items={data[3]} />;
+            return <MediaContainer items={data[3]} />;
           }}
         </Await>
-      </MovieCategoryLayout>
+      </MediaCategoryLayout>
     </section>
   );
 }

@@ -12,6 +12,7 @@ import { signInWithEmailPassword, signInWithGoogle } from "../../firebase";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import { useAuth } from "../../component/auth/useAuth";
+
 export const Route = createFileRoute("/_authLayout/signin")({
   component: RouteComponent,
   beforeLoad({ context }) {
