@@ -34,7 +34,7 @@ function RouteComponent() {
 
   const monthNum = new Date().getMonth();
   return (
-    <section className="scroll overflow-y-scroll px-4 py-6 text-white md:px-8">
+    <section className="scroll md:w-9/10 overflow-y-scroll px-4 py-6 text-white md:mx-auto md:min-w-[526px] md:max-w-[768px] md:px-8 lg:max-w-[980px]">
       <Await promise={deferredSlowData} fallback={<Loading />}>
         {(data) => {
           return <Hero poster_path={data[2][0].backdrop_path} />;

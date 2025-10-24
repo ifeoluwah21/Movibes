@@ -23,7 +23,7 @@ const SideNav: React.FC = () => {
     <>
       <nav
         ref={navRef}
-        className="bg-black-100 close fixed left-0 top-0 z-[4] row-span-2 flex h-screen w-full flex-col flex-nowrap gap-y-20 py-8 transition duration-300 ease-in md:sticky md:translate-x-0 md:transform-none md:rounded-br-[45px] md:rounded-tr-[45px]"
+        className="bg-black-100 close fixed left-0 top-0 z-[4] row-span-2 flex h-[100dvh] w-full flex-col flex-nowrap gap-y-20 py-8 transition duration-300 ease-in md:sticky md:translate-x-0 md:transform-none md:rounded-br-[45px] md:rounded-tr-[45px]"
       >
         <figure className="relative px-8">
           <img src={logo} width={118} height={42} alt="Movibes Logo" />
