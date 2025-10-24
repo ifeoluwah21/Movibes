@@ -13,7 +13,6 @@ import LogoSpinner from "../../../component/ui/LogoSpinner";
 export const Route = createFileRoute("/_homeLayout/tv/$tvId")({
   component: RouteComponent,
   loader: async ({ params }) => {
-    console.log(params.tvId);
     const deferredSlowData = Promise.all([
       getMediaDetails("tv", +params.tvId),
       getMediaCredits("tv", +params.tvId),
@@ -32,12 +31,10 @@ function RouteComponent() {
       <Await promise={deferredSlowData} fallback={<LogoSpinner />}>
         {(data) => {
           const [tvDetails, tvCredits] = data as [TvDetails, MediaCredits];
-          console.log(data);
           const director = tvDetails.created_by.map((i) => i.name);
           const writers = tvCredits.crew
             .filter((crew) => crew.department.toLowerCase() === "writing")
             .map((writer) => writer.original_name);
-          console.log(director, writers);
           const releaseDate = new Date(tvDetails.first_air_date);
           return (
             <>

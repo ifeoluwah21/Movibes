@@ -21,16 +21,16 @@ function RouteComponent() {
 const HomeLayout = () => {
   const user = useAuth();
   return (
-    <main className="grid h-screen grid-cols-[226px_auto] grid-rows-[auto_1fr] overflow-y-clip text-white">
+    <main className="grid min-h-[100dvh] grid-rows-[auto_1fr] overflow-y-clip text-white md:grid-cols-[226px_auto]">
       <SideNav />
-      <header className="grid grid-cols-[1fr_100px] items-center justify-between gap-12 p-8">
+      <header className="bg-black-50 z-2 sticky top-0 grid grid-cols-1 items-center justify-between gap-12 p-4 md:grid-cols-[1fr_100px] md:p-8">
         <Formik
           initialValues={{
             search: "",
           }}
           onSubmit={() => {}}
         >
-          <Form className="w-full">
+          <Form className="w-9/10 md:w-full">
             <FormGroup>
               <Field
                 label="Search"
@@ -39,14 +39,14 @@ const HomeLayout = () => {
                 type="text"
                 placeholder="Search for movies, TV shows..."
                 autoComplete="false"
-                className="bg-black-100 rounded-4xl w-9/10 max-w-4xl border-0 px-8 py-4 font-semibold outline-none"
+                className="bg-black-100 w-9/10 max-w-4xl rounded-sm border-0 px-3 py-4 font-semibold outline-none"
               />
             </FormGroup>
           </Form>
         </Formik>
         <img
           src={user?.photoURL || userPhoto}
-          className="h-[70px] w-[70px] justify-self-end rounded-full"
+          className="hidden h-[70px] w-[70px] justify-self-end rounded-full md:block"
           alt=""
         />
       </header>

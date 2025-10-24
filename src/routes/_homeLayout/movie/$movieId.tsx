@@ -13,7 +13,6 @@ import LogoSpinner from "../../../component/ui/LogoSpinner";
 export const Route = createFileRoute("/_homeLayout/movie/$movieId")({
   component: RouteComponent,
   loader: async ({ params }) => {
-    console.log(params.movieId);
     const deferredSlowData = Promise.all([
       getMediaDetails("movie", +params.movieId),
       getMediaCredits("movie", +params.movieId),
@@ -28,7 +27,7 @@ function RouteComponent() {
   const { deferredSlowData } = Route.useLoaderData();
 
   return (
-    <section className="font-Poppins scroll overflow-y-scroll px-10 py-4">
+    <section className="font-Poppins scroll overflow-y-scroll px-4 py-4 md:px-8">
       <Await promise={deferredSlowData} fallback={<LogoSpinner />}>
         {(data) => {
           const [movieDetails, movieCredits] = data as [
@@ -41,7 +40,6 @@ function RouteComponent() {
           const writers = movieCredits.crew
             .filter((crew) => crew.department.toLowerCase() === "writing")
             .map((writer) => writer.original_name);
-          console.log(director, writers);
           const releaseDate = new Date(movieDetails.release_date);
           return (
             <>
