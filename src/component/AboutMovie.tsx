@@ -32,9 +32,7 @@ const AboutMovie: FC<{
         <span>PG-13</span>
         {media_type === "movie" ? <span>{runtime} mins</span> : null}
       </div>
-      <p className="border-white-100/25 border-b-[1px] py-4 text-justify">
-        {overview}
-      </p>
+      <p className="border-white-100/25 border-b-[1px] py-4">{overview}</p>
       <p className="border-white-100/25 border-b-[1px] py-4">
         Genres :{" "}
         <span className="text-sky-50">

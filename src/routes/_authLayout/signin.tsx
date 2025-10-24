@@ -44,14 +44,14 @@ function RouteComponent() {
   }
   return (
     <section className="grid h-screen grid-cols-[1.2fr_1fr]">
-      <div>
+      <div className="hidden md:block">
         <img
           src="https://image.tmdb.org/t/p/w780/rthMuZfFv4fqEU4JVbgSW9wQ8rs.jpg"
           alt=""
           className="h-full object-cover"
         />
       </div>
-      <div className="bg-black-50 h-full">
+      <div className="bg-black-50 col-span-2 h-full md:col-span-1">
         <Formik
           initialValues={{ email: "", password: "" }}
           validationSchema={signInSchema}
