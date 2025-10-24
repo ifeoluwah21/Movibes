@@ -13,12 +13,11 @@ export const MediaCard: React.FC<{ media: MediaItem }> = ({ media }) => {
         type="button"
         className="cursor-pointer"
         onClick={() => {
-          console.log(id);
           navigate({ to: `/${media_type}/${id}` });
         }}
       >
         <img
-          src={`https://image.tmdb.org/t/p/w185${poster_path}`}
+          src={`https://image.tmdb.org/t/p/w342${poster_path}`}
           width={185}
           height={278}
           className="rounded-[20px]"
@@ -39,7 +38,7 @@ export const MediaContainer: React.FC<{
   type?: "movie" | "tv";
 }> = ({ items }) => {
   return (
-    <div className="flex flex-row flex-wrap justify-between gap-x-6 gap-y-12">
+    <div className="flex flex-row flex-wrap justify-center gap-x-6 gap-y-12 md:justify-between">
       {items.map((item) => {
         return <MediaCard key={item.id} media={item} />;
       })}

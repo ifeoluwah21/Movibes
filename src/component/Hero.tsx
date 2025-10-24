@@ -6,7 +6,7 @@ const Hero: React.FC<{ poster_path: string }> = ({ poster_path }) => {
     <article className="py-6">
       <figure className="relative">
         <img
-          src={`https://image.tmdb.org/t/p/w780/${poster_path}`}
+          src={`https://image.tmdb.org/t/p/w780${poster_path}`}
           // width="780"
           // height="439"
           className="h-[500px] w-full rounded-[20px] object-cover object-center"

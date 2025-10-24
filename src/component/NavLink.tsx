@@ -3,9 +3,9 @@ import React, { type JSX } from "react";
 
 const NavLink: React.FC<
   LinkComponentProps & { navIcon: JSX.Element; navTitle: string }
-> = ({ to, navTitle, navIcon }) => {
+> = ({ to, navTitle, navIcon, onClick }) => {
   return (
-    <Link to={to}>
+    <Link to={to} onClick={onClick}>
       {({ isActive }) => {
         return (
           <li

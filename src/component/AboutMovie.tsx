@@ -26,7 +26,7 @@ const AboutMovie: FC<{
 }) => {
   return (
     <section className="mb-6">
-      <div className="flex gap-3.5 text-xl font-medium">
+      <div className="block gap-3.5 space-x-4 space-y-3 text-xl font-medium md:flex">
         <h1>{title}</h1>
         <span>{releaseDate}</span>
         <span>PG-13</span>

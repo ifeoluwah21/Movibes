@@ -34,7 +34,7 @@ function RouteComponent() {
 
   const monthNum = new Date().getMonth();
   return (
-    <section className="scroll overflow-y-scroll px-8 py-6 text-white">
+    <section className="scroll overflow-y-scroll px-4 py-6 text-white md:px-8">
       <Await promise={deferredSlowData} fallback={<Loading />}>
         {(data) => {
           return <Hero poster_path={data[2][0].backdrop_path} />;
@@ -44,7 +44,6 @@ function RouteComponent() {
         <MediaCategoryHeader title="Trending" />
         <Await promise={deferredSlowData} fallback={<Loading />}>
           {(data) => {
-            console.log(data);
             return <MediaContainer items={data[0]} />;
           }}
         </Await>
@@ -53,7 +52,6 @@ function RouteComponent() {
         <MediaCategoryHeader title={`Popular movies on ${months[monthNum]}`} />
         <Await promise={deferredSlowData} fallback={<Loading />}>
           {(data) => {
-            console.log(data[1], "popular movies");
             return <MediaContainer items={data[1]} />;
           }}
         </Await>
