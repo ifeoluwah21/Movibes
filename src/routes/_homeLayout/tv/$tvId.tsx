@@ -27,7 +27,7 @@ function RouteComponent() {
   const { deferredSlowData } = Route.useLoaderData();
 
   return (
-    <section className="font-Poppins scroll overflow-y-scroll px-10 py-4">
+    <section className="font-Poppins scroll md:w-9/10 overflow-y-scroll px-10 py-4 md:mx-auto md:min-w-[526px] md:max-w-[768px] md:px-8 lg:max-w-[980px]">
       <Await promise={deferredSlowData} fallback={<LogoSpinner />}>
         {(data) => {
           const [tvDetails, tvCredits] = data as [TvDetails, MediaCredits];

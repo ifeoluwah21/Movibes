@@ -29,7 +29,7 @@ function RouteComponent() {
 
   const monthNum = new Date().getMonth();
   return (
-    <div className="scroll overflow-y-scroll px-8 py-6 text-white">
+    <div className="scroll md:w-9/10 overflow-y-scroll px-8 py-6 text-white md:mx-auto md:min-w-[526px] md:max-w-[768px] md:px-8 lg:max-w-[980px]">
       <MediaCategoryLayout>
         <Await promise={deferredSlowData} fallback={<Loading />}>
           {(data) => {
