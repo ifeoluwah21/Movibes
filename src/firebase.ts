@@ -14,14 +14,15 @@ import {
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+
 const firebaseConfig = {
   apiKey: `${import.meta.env.VITE_FIREBASE_API_KEY}`,
-  authDomain: "movibes-a0440.firebaseapp.com",
-  projectId: "movibes-a0440",
-  storageBucket: "movibes-a0440.firebasestorage.app",
-  messagingSenderId: "830590605974",
-  appId: "1:830590605974:web:1a4a38090c6eccb3b440b7",
-  measurementId: "G-PJ4C0P8WPQ",
+  authDomain: "movibes-e9f00.firebaseapp.com",
+  projectId: "movibes-e9f00",
+  storageBucket: "movibes-e9f00.firebasestorage.app",
+  messagingSenderId: "1091184763514",
+  appId: "1:1091184763514:web:cdc02fcb9032ee5bd691c3",
+  measurementId: "G-LF1PV61KWG",
 };
 
 // Initialize Firebase
